@@ -1,0 +1,1 @@
+Inner product checksum adjoint_test_field_1 =                0

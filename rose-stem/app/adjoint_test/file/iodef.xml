@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation>
+
+  <context id = "adjoint_test">
+
+   <axis_definition>
+    <axis id="vert_axis_half_levels" name="half_levels"/>
+    <axis id="vert_axis_full_levels" name="full_levels"/>
+    <axis id="radiation_levels" name="radiation_levels"/>
+   </axis_definition>
+
+
+
+   <grid_definition>
+    <grid id="node_grid">
+      <domain domain_ref="node"/>
+      <axis axis_ref="vert_axis_full_levels"/>
+    </grid>
+    <grid id="half_level_face_grid">
+      <domain domain_ref="face"/>
+      <axis axis_ref="vert_axis_half_levels"/>
+    </grid>
+    <grid id="full_level_face_grid">
+      <domain domain_ref="face"/>
+      <axis axis_ref="vert_axis_full_levels"/>
+    </grid>
+        <grid id="half_level_edge_grid">
+      <domain domain_ref="edge"/>
+      <axis axis_ref="vert_axis_half_levels"/>
+    </grid>
+   </grid_definition>
+
+   <field_definition prec="8" >
+
+     <!-- Main diagnostic group -->
+     <field_group id="diagnostic_fields" freq_op="1ts" enabled=".TRUE." operation="once" >
+       <field id="adjoint_test_field" name="adjoint_test_field" long_name="adjoint_test_field" unit="1" grid_ref="half_level_face_grid" />
+     </field_group>
+     <!-- Initial conditions group -->
+     <field_group id="initial_fields" freq_op="1ts" enabled=".TRUE." operation="once" >
+       <field id="init_adjoint_test_field" name="adjoint_test_field" long_name="adjoint_test_field" unit="1" grid_ref="half_level_face_grid" />
+     </field_group>
+
+   </field_definition>
+
+   <file_definition
+      type="one_file"
+      par_access="collective"
+      time_counter="none">
+
+     <file id="lfric_diag" name="adjoint_test_diag" output_freq="1ts" convention="UGRID" enabled=".TRUE.">
+       <field field_ref="adjoint_test_field"/>
+     </file>
+
+    </file_definition>
+
+  </context>
+
+  <context id = "xios">
+    <variable_definition>
+      <variable_group id = "buffer">
+        <variable id = "optimal_buffer_size" type = "string" >performance</variable>
+        <variable id = "buffer_factor_size" type = "double" >1.0</variable>
+      </variable_group>
+
+      <variable_group id = "parameters" >
+        <variable id = "using_server" type = "bool" >true</variable>
+        <variable id = "info_level" type = "int" >50</variable>
+        <variable id = "print_file" type="bool">true</variable>
+      </variable_group>
+    </variable_definition>
+  </context>
+
+</simulation>

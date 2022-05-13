@@ -1,0 +1,5 @@
+access-list=*
+owner=lfric
+project=adjoint_test
+title=Functional testing suite for LFRic adjoint_test project
+

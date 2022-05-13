@@ -1,0 +1,70 @@
+&base_mesh
+f_lat_deg=45.0,
+filename='mesh_C24.nc',
+fplane=.false.,
+geometry='spherical',
+offline_partitioning=.false.,
+prime_mesh_name='C24',
+topology='fully_periodic',
+/
+
+
+&domain_size
+planar_domain_max_x=1.0,
+planar_domain_max_y=1.0,
+planar_domain_min_x=-1.0,
+planar_domain_min_y=-1.0,
+/
+
+&extrusion
+domain_top=1000.0,
+method='uniform',
+number_of_layers=1,
+/
+
+&finite_element
+cellshape='quadrilateral',
+element_order=0,
+rehabilitate=.true.,
+coord_order=1
+coord_system='alphabetaz'
+/
+
+&io
+  use_xios_io               = .true.
+  write_diag                = .true.
+  diagnostic_frequency      = 1
+  subroutine_timers         = .false.
+  timer_output_path         = 'timer.txt'
+  subroutine_counters       = .false.
+  counter_output_suffix     = 'counter.txt'
+  checkpoint_read           = .false.
+  checkpoint_write          = .false.
+/
+
+&logging
+  run_log_level='info'
+/
+
+&time
+  calendar = 'timestep'
+  timestep_start = '1'
+  timestep_end = '1'
+  calendar_type='gregorian'
+  calendar_start='2016-01-01 15:00:00'
+/
+
+&timestepping
+  dt=1.0
+  spinup_period=0.0
+/
+
+&partitioning
+  partitioner='cubedsphere',
+  panel_decomposition = 'auto',
+/
+
+&planet
+  radius=6371229.0,
+  scaling_factor=125.0,
+/
