@@ -5,8 +5,6 @@
 !-----------------------------------------------------------------------------
 !> Drives the execution of the adjoint_test miniapp.
 !>
-!> This is a temporary solution until we have a proper driver layer.
-!>
 module adjoint_test_driver_mod
 
   use base_mesh_config_mod,       only : prime_mesh_name
@@ -52,6 +50,7 @@ module adjoint_test_driver_mod
   use adjoint_test_mod,               only : load_configuration, program_name
   use adjoint_test_alg_mod,           only : adjoint_test_alg
   use ke_grad_alg_mod,            only:  ke_grad_adjoint_test_alg
+  use rhs_eos_alg_mod,            only:  rhs_eos_adjoint_test_alg
   use time_config_mod,            only : timestep_start, &
                                          timestep_end,   &
                                          calendar_start, &
@@ -222,13 +221,7 @@ contains
     ! Call an algorithm
     call adjoint_test_alg(field_1, chi, panel_id)
     call ke_grad_adjoint_test_alg(field_1, chi, panel_id)
-    ! Write out output file
-    call log_event(program_name//": Writing diagnostic output", LOG_LEVEL_INFO)
-
-    !if (write_diag ) then
-    !  ! Calculation and output of diagnostics
-    !  call field_1%write_field('adjoint_test_field')
-    !end if
+    call rhs_eos_adjoint_test_alg(field_1, chi, panel_id)
 
   end subroutine run
 
