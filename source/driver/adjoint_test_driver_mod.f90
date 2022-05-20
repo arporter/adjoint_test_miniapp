@@ -51,6 +51,7 @@ module adjoint_test_driver_mod
   use simple_io_context_mod,      only : simple_io_context_type
   use adjoint_test_mod,               only : load_configuration, program_name
   use adjoint_test_alg_mod,           only : adjoint_test_alg
+  use ke_grad_alg_mod,            only:  ke_grad_adjoint_test_alg
   use time_config_mod,            only : timestep_start, &
                                          timestep_end,   &
                                          calendar_start, &
@@ -220,7 +221,7 @@ contains
 
     ! Call an algorithm
     call adjoint_test_alg(field_1, chi, panel_id)
-
+    call ke_grad_adjoint_test_alg(field_1, chi, panel_id)
     ! Write out output file
     call log_event(program_name//": Writing diagnostic output", LOG_LEVEL_INFO)
 
